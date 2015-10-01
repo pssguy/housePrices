@@ -8,7 +8,9 @@ dashboardPage(
   
   dashboardSidebar(
    # includeCSS("custom.css"),
-   selectInput("city","Choice", cityChoice,selected="YEOVIL"),
+    radioButtons("area","Choose By",c("City","Postal Code"), inline=T),
+ 
+   uiOutput("a"),
     
     
     

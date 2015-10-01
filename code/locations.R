@@ -3,13 +3,22 @@
 
 
 data <- reactive({
+  
+  if(input$area=="City") {
 cityHouses <-current %>% 
   tbl_df() %>% 
   filter(City==input$city&propertyType!="F") 
+  } else {
+    cityHouses <-current %>% 
+      tbl_df() %>% 
+     # mutate(min=)
+      filter(postCode>=paste0(input$pc," 1AA")&postCode<=paste0(input$pc," 9ZZ")&propertyType!="F") 
+}
 
-
+  
+  
 cityHouses$location  <- paste(cityHouses$PAON, cityHouses$Street ,cityHouses$postCode, sep=",")
-
+print(cityHouses$location)
 # i<- 1
 # latLon <- data.frame(lon=numeric(),lat=numeric()) #str(latLon)
 a <-Sys.time()
@@ -27,6 +36,9 @@ print(a)
 print(b)
 cityHouses <- cbind(cityHouses,latLon)
 cityHouses$address <- paste(cityHouses$PAON,cityHouses$Street,cityHouses$City, sep=",")
+
+print("glimpse(cityHouses)")
+print(glimpse(cityHouses))
 
 factorPal <-
   colorFactor(c("red","blue"), cityHouses$priceType)
@@ -46,8 +58,9 @@ return(info)
 })
 
 output$map <- renderLeaflet({
-  
-  if(is.null( data()$cityHouses)) return()
+  if(is.null(input$city)) return()
+  #if(is.null(input$pc)) return()
+  if(is.null(data()$cityHouses)) return()
   
   cityHouses <- data()$cityHouses
   

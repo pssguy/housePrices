@@ -35,3 +35,11 @@ colnames(current) <- c("id","price","transferDate","postCode","propertyType","ne
 
 setkey(current,postCode) 
 cityChoice <- sort(unique(current$City))
+
+postCodeChoice <- current %>% 
+  mutate(pc=str_sub(postCode,1,3)) %>% 
+  .$pc %>% 
+  unique() %>% 
+  sort()
+
+
