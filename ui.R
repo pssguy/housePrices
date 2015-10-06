@@ -2,13 +2,13 @@
 
 
 
-dashboardPage(
+dashboardPage(title = "House Prices",
   skin = "blue",
   dashboardHeader(title = "House Prices"),
   
   dashboardSidebar(
    # includeCSS("custom.css"),
-    radioButtons("area","Choose By",c("City","Postal Code"), inline=T),
+    radioButtons("area","2015 Sales: Choose By",c("City","Postal Code"), inline=T),
  
    uiOutput("a"),
     

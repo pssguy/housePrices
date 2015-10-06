@@ -12,12 +12,12 @@ cityHouses <-current %>%
     cityHouses <-current %>% 
       tbl_df() %>% 
      # mutate(min=)
-      filter(postCode>=paste0(input$pc," 1AA")&postCode<=paste0(input$pc," 9ZZ")&propertyType!="F") 
+      filter(postCode>=paste0(input$pc," 0AA")&postCode<=paste0(input$pc," 9ZZ")&propertyType!="F") 
 }
 
+  print(nrow(cityHouses))
   
-  
-cityHouses$location  <- paste(cityHouses$PAON, cityHouses$Street ,cityHouses$postCode, sep=",")
+cityHouses$location  <- paste(cityHouses$PAON, cityHouses$Street ,cityHouses$City,cityHouses$postCode, sep=",")
 print(cityHouses$location)
 # i<- 1
 # latLon <- data.frame(lon=numeric(),lat=numeric()) #str(latLon)
@@ -33,7 +33,10 @@ for (i in 1:nrow(cityHouses)) {
 }
 b <-Sys.time() # yeovil 533(houses only) takes 1 min 20 secs 
 print(a)
-print(b)
+
+
+print(nrow(latLon))
+
 cityHouses <- cbind(cityHouses,latLon)
 cityHouses$address <- paste(cityHouses$PAON,cityHouses$Street,cityHouses$City, sep=",")
 
@@ -49,6 +52,8 @@ cityHouses$showPrice <- comma_format()(cityHouses$price) # not working
 cityHouses$popup <- paste0(cityHouses$year,"<br>",cityHouses$address,"<br>",cityHouses$showPrice)
 
 cityHouses$price <- as.numeric(cityHouses$price)
+
+write_csv(cityHouses,"cityHousesTest.csv")
 
 binPal <-
   colorBin(c("#FFFF00","#FF8000","#FF0000"), cityHouses$price,  pretty = TRUE)

@@ -22,6 +22,7 @@ library(leaflet)
 
 
 
+
 ### import data
 Sys.time()
 current <- fread("data/landRegistry2015toDate.csv", header = FALSE) ## needs to have been pre-downloaded and saved as csv
@@ -34,12 +35,37 @@ colnames(current) <- c("id","price","transferDate","postCode","propertyType","ne
 # probably fastest to subset first and then amend firlds
 
 setkey(current,postCode) 
-cityChoice <- sort(unique(current$City))
+#cityChoice <- sort(unique(current$City))
 
-postCodeChoice <- current %>% 
+# tidy up look
+simpleCap <- function(x) {
+  s <- strsplit(x, " ")[[1]]
+  paste(toupper(substring(s, 1,1)), substring(s, 2),
+        sep="", collapse=" ")
+}
+
+
+cityOptions <-current %>% 
+  group_by(City) %>% 
+  tally() 
+glimpse(cityOptions)
+cityOptions$display <- sapply(tolower(cityOptions$City),simpleCap)
+
+cityOptions <- cityOptions %>% 
+  mutate(display= paste0(display," (",n,")"))
+
+cityChoice <- sort(cityOptions$City)
+
+names(cityChoice) <- sort(cityOptions$display)
+
+postCodeOptions <- current %>% 
   mutate(pc=str_sub(postCode,1,3)) %>% 
-  .$pc %>% 
-  unique() %>% 
-  sort()
+  group_by(pc) %>% 
+  tally() %>% 
+  filter(pc>"AA") %>% 
+  mutate(display=paste0(pc," (",n,")"))
+
+postCodeChoice <- sort(postCodeOptions$pc)
+names(postCodeChoice) <- sort(postCodeOptions$display)
 
 
