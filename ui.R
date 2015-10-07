@@ -9,7 +9,7 @@ dashboardPage(title = "House Prices",
   dashboardSidebar(
    # includeCSS("custom.css"),
     radioButtons("area","2015 Sales: Choose By",c("City","Postal Code"), inline=T),
- 
+    radioButtons("housing",NULL,c("Houses","Flats","Both"), inline=T),
    uiOutput("a"),
     
     

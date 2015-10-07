@@ -6,9 +6,10 @@ shinyServer(function(input, output,session) {
   
   output$a <- renderUI({
     if(input$area=="City") {
-    selectInput("city","Choice", cityChoice,selected="ABERDOVEY",multiple = T) 
+    selectInput("city","Choice(s)", cityChoice,selected="ABERDOVEY",multiple = T) 
+      
     } else {
-      selectInput("pc","Choice", postCodeChoice,selected="L1")  
+      selectInput("pc","Choice(s)", postCodeChoice,selected="L1")  
     }
       
   })
