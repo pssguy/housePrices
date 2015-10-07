@@ -5,10 +5,12 @@
 data <- reactive({
   
   if(input$area=="City") {
+    print(input$city)
 cityHouses <-current %>% 
   tbl_df() %>% 
   filter(City==input$city&propertyType!="F") 
   } else {
+    print(input$pc)
     cityHouses <-current %>% 
       tbl_df() %>% 
      # mutate(min=)

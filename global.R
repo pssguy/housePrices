@@ -24,12 +24,12 @@ library(leaflet)
 
 
 ### import data
-Sys.time()
-current <- fread("data/landRegistry2015toDate.csv", header = FALSE) ## needs to have been pre-downloaded and saved as csv
-Sys.time()
-#NB should do this initially
-colnames(current) <- c("id","price","transferDate","postCode","propertyType","new","duration"
-                       ,"PAON","SAON","Street","Locality","City","District","County","recordStatus")
+#Sys.time()
+current <- fread("landRegistry2015toDate.csv", header = TRUE) ## needs to have been pre-downloaded and saved as csv
+# Sys.time()
+# #NB should do this initially
+# colnames(current) <- c("id","price","transferDate","postCode","propertyType","new","duration"
+#                        ,"PAON","SAON","Street","Locality","City","District","County","recordStatus")
 
 
 # probably fastest to subset first and then amend firlds
@@ -59,10 +59,9 @@ cityChoice <- sort(cityOptions$City)
 names(cityChoice) <- sort(cityOptions$display)
 
 postCodeOptions <- current %>% 
-  mutate(pc=str_sub(postCode,1,3)) %>% 
   group_by(pc) %>% 
   tally() %>% 
-  filter(pc>"AA") %>% 
+  filter(pc>"AA") %>% #  a few are missing
   mutate(display=paste0(pc," (",n,")"))
 
 postCodeChoice <- sort(postCodeOptions$pc)

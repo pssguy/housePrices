@@ -8,7 +8,7 @@ shinyServer(function(input, output,session) {
     if(input$area=="City") {
     selectInput("city","Choice", cityChoice,selected="ABERDOVEY",multiple = T) 
     } else {
-      selectInput("pc","Choice", postCodeChoice,selected="W1T")  
+      selectInput("pc","Choice", postCodeChoice,selected="L1")  
     }
       
   })
