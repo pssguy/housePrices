@@ -76,15 +76,43 @@ print("glimpse(cityHouses)")
 print(cityHouses$propertyType)
 print(glimpse(cityHouses))
 
-factorPal <-
-  colorFactor(c("red","blue"), cityHouses$priceType)
+# factorPal <-  
+#   colorFactor(c("red","blue"), cityHouses$priceType)
 
-
-cityHouses$showPrice <- comma_format()(cityHouses$price) # not working
-
-cityHouses$popup <- paste0(cityHouses$year,"<br>",cityHouses$address,"<br>",cityHouses$showPrice)
-
+print(cityHouses$price)
+#cityHouses$showPrice <- comma_format()(cityHouses$price) # not working
+print(str(cityHouses))
+print("thousand")
 cityHouses$price <- as.numeric(cityHouses$price)
+cityHouses$showPrice <- comma(cityHouses$price)
+print(cityHouses$showPrice)
+
+
+# cityHouses$property <- "Detached"
+# cityHouses[cityHouses$propertyType=="F",]$property <- "Flat"
+# cityHouses[cityHouses$propertyType=="T",]$property <- "Terraced"
+# cityHouses[cityHouses$propertyType=="S",]$property <- "Semi"
+
+cityHouses$date <- paste(month(cityHouses$transferDate, label=T),day(cityHouses$transferDate),year(cityHouses$transferDate),sep=" ")
+
+cityHouses$popup <- sprintf("<table cellpadding='4' style='line-height:1'><tr>
+                        <th>%1$s</th></tr>
+                          <tr></tr>
+                          <tr><td>Price: %2$s</td></tr>
+                          <tr><td>Date: %3$s</td></tr>
+                            <tr><td>Property: %4$s</td></tr>
+                          
+                          </table>",
+                            cityHouses$address,
+                            cityHouses$showPrice,
+                            cityHouses$date,
+                            cityHouses$property
+)
+
+
+#cityHouses$popup <- paste0(cityHouses$year,"<br>",cityHouses$address,"<br>",cityHouses$showPrice)
+
+
 
 write_csv(cityHouses,"cityHousesTest.csv")
 

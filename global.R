@@ -17,6 +17,7 @@ library(data.table)
 library(scales)
 library(stringr)
 library(leaflet)
+library(lubridate)
 
 
 
@@ -25,7 +26,7 @@ library(leaflet)
 
 ### import data
 #Sys.time()
-current <- fread("landRegistry2015toDate.csv", header = TRUE) ## needs to have been pre-downloaded and saved as csv
+current <- fread("data/landRegistry2015toDate.csv", header = TRUE) ## needs to have been pre-downloaded and saved as csv
 # Sys.time()
 # #NB should do this initially
 # colnames(current) <- c("id","price","transferDate","postCode","propertyType","new","duration"
