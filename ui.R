@@ -7,12 +7,12 @@ dashboardPage(title = "House Prices",
   dashboardHeader(title = "House Prices"),
   
   dashboardSidebar(
-   # includeCSS("custom.css"),
+    includeCSS("custom.css"),
     radioButtons("area","2015 Sales: Choose By",c("City","Postal Code"), inline=T),
     radioButtons("housing",NULL,c("Houses","Flats","Both"), inline=T),
    uiOutput("a"),
     
-    
+   actionButton("button", "Obtain Map"),
     
     
     
@@ -20,40 +20,35 @@ dashboardPage(title = "House Prices",
       id = "sbMenu",
       
       menuItem(
-        "Land Registry", tabName = "registry")
+        "UK Land Registry",
+      menuSubItem("Maps", tabName= "registry_maps"),
+      menuSubItem("Info", tabName = "registry_info", icon = icon("info"))
       ),
       
-      menuItem("Info", tabName = "info", icon = icon("info")),
-      menuItem(
-        "Other Dashboards",
-        
-        
-        menuSubItem("Climate",href = "https://mytinyshinys.shinyapps.io/climate"),
-        menuSubItem("Cricket",href = "https://mytinyshinys.shinyapps.io/cricket"),
-        menuSubItem("Mainly Maps",href = "https://mytinyshinys.shinyapps.io/mainlyMaps"),
-        menuSubItem("MLB",href = "https://mytinyshinys.shinyapps.io/mlbCharts"),
-        
-        menuSubItem("World Soccer",href = "https://mytinyshinys.shinyapps.io/worldSoccer")
-        
-      ),
-      menuItem("", icon = icon("twitter-square"),
-               href = "https://twitter.com/pssGuy"),
-      menuItem("", icon = icon("envelope"),
-               href = "mailto:agcur@rogers.com")
       
+      tags$hr(),
+      menuItem(text="",href="https://mytinyshinys.shinyapps.io/dashboard",badgeLabel = "All Dashboards and Trelliscopes (14)"),
+      tags$hr(),
+      
+      tags$body(
+        a(class="addpad",href="https://twitter.com/pssGuy", target="_blank",img(src="images/twitterImage25pc.jpg")),
+        a(class="addpad2",href="mailto:agcur@rogers.com", img(src="images/email25pc.jpg")),
+        a(class="addpad2",href="https://github.com/pssguy",target="_blank",img(src="images/GitHub-Mark30px.png")),
+        a(href="https://rpubs.com/pssguy",target="_blank",img(src="images/RPubs25px.png"))
+      )
     
-  ),
+  )),
   dashboardBody(tabItems(
-    tabItem("registry",
+    tabItem("registry_maps",
            
                 box(
                   width = 12, collapsible = TRUE,
                   status = "success", solidHeader = TRUE,
-                  title = "Map",
+                  title = "Map - Click for Property details",
                   leafletOutput("map")
                 )
     ),
-    tabItem("info", includeMarkdown("info.md"))
+    tabItem("registry_info", includeMarkdown("registry_info.md"))
     
     
     

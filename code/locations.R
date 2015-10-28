@@ -2,7 +2,7 @@
 
 
 
-data <- reactive({
+data <- eventReactive(input$button,{
   
   if (input$housing=="Houses") {
   if (input$area=="City") {
@@ -95,6 +95,9 @@ print(cityHouses$showPrice)
 
 cityHouses$date <- paste(month(cityHouses$transferDate, label=T),day(cityHouses$transferDate),year(cityHouses$transferDate),sep=" ")
 
+## need to jitter lon otherwise several have same and do not get shown
+
+cityHouses$lon <- jitter(cityHouses$lon)
 cityHouses$popup <- sprintf("<table cellpadding='4' style='line-height:1'><tr>
                         <th>%1$s</th></tr>
                           <tr></tr>
@@ -116,9 +119,16 @@ cityHouses$popup <- sprintf("<table cellpadding='4' style='line-height:1'><tr>
 
 write_csv(cityHouses,"cityHousesTest.csv")
 
-binPal <-
-  colorBin(c("#FFFF00","#FF8000","#FF0000"), cityHouses$price,  pretty = TRUE)
+# binPal <-
+#   colorBin(c("#FFFF00","#FF8000","#FF0000"), cityHouses$price,  pretty = TRUE)
+
+
+
 }
+
+
+
+
 print("reachedInfo")
 print(str(cityHouses))
 info=list(cityHouses=cityHouses)
@@ -137,7 +147,10 @@ output$map <- renderLeaflet({
   
   binPal <-
     colorBin(c("#FFFF00","#FF8000","#FF0000"), cityHouses$price,  pretty = TRUE)
-  
+ 
+#   binPal <-
+#     colorQuantile("Blues", domain = NULL,as.numeric(cityHouses$price))
+   
   print(glimpse(cityHouses))
   write.csv(cityHouses,"problem.csv", row.names=F)  # data does come through after a null map but then shows map
   # with just grey backgrownd

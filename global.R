@@ -4,13 +4,10 @@ library(shinydashboard)
 
 library(dplyr)
 library(ggvis)
-#library(rvest) # prob already there
+
 library(DT)
 library(stringr)
-#library(XML)
-#library(markdown)
-#library(httr)
-#library(lattice)
+
 library(readr)
 library(ggmap)
 library(data.table)
